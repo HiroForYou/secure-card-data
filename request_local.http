@@ -106,3 +106,4 @@ Content-Type: application/json
 GET http://localhost:3000/token/a
 
 GET http://localhost:3000/token/4b491543d483e247
+
