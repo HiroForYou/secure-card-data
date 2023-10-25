@@ -28,16 +28,33 @@ jobs:
       - name: "Resolve Project Dependencies Using Npm"
         shell: bash
         run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          pushd '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           npm install --legacy-peer-deps
           npm run build --if-present
+          echo "$GITHUB_SHA" > sha.txt
           popd
 
       - name: "Run Azure Functions Action"
-        uses: Azure/functions-action@v1.4.3
+        uses: Azure/functions-action@v1
         id: fa
         with:
           app-name: "cwiki-app"
           slot-name: "Production"
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E3DC81AB858A4055B936D9E7DB965EE0 }}
+          scm-do-build-during-deployment: true
+
+      - name: "E2E Check HttpTrigger Result"
+        shell: pwsh
+        run: |
+          $i = 0
+          while ($i -lt 10) {
+            sleep 10
+            $RESPONSE = $(curl "${{ steps.fa.outputs.app-url }}/api/HttpTrigger")
+            $RESULT = ($RESPONSE -eq "$env:GITHUB_SHA")
+            if ($RESULT) {
+              exit 0
+            }
+            $i = $i + 1
+          }
+          exit 1
