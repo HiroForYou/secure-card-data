@@ -43,6 +43,7 @@ jobs:
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E3DC81AB858A4055B936D9E7DB965EE0 }}
           scm-do-build-during-deployment: true
+          enable-oryx-build: true
 
       - name: "E2E Check HttpTrigger Result"
         shell: pwsh
