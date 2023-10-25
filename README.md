@@ -1,12 +1,27 @@
 # Secure Card Data Project 🛡️
 
-🚀 **¡Prueba la aplicación desplegada en Azure Functions!** [Demo](https://cwiki-azure-function.azurewebsites.net/)
+🚀 **¡Prueba la aplicación desplegada en Azure Functions!** [Demo](https://cw-cli.azurewebsites.net/api)
 
 El proyecto Secure Card Data es una aplicación basada en Nest.js que proporciona métodos para gestionar datos de tarjetas de forma segura. Este README te guiará a través de los pasos para ejecutar el proyecto en un entorno local y utilizar los comandos de npm disponibles.
 
 ## Instrucciones de Ejecución
 
-1. **Compilación de TypeScript y Generación del Build**
+1. **Configuración del archivo .env**
+
+   Crea un archivo llamado .env en la raíz de tu proyecto y configura las variables de entorno necesarias. Asegúrate de reemplazar los valores en blanco con tus propias configuraciones. Aquí tienes un ejemplo:
+
+   ```plaintext
+   Copy code
+   REDIS_URL=
+   SQL_SERVER_HOST=
+   SQL_SERVER_USER=
+   SQL_SERVER_PWD=
+   SQL_SERVER_DB=
+   ```
+
+   Añade las URLs y credenciales correspondientes para la base de datos SQL Server y Redis, según sea necesario para tu aplicación.
+
+2. **Compilación de TypeScript y Generación del Build**
 
    Para compilar TypeScript y generar el build de la aplicación que expondrá los métodos utilizados en las Azure Functions, utiliza el siguiente comando:
 
@@ -14,7 +29,7 @@ El proyecto Secure Card Data es una aplicación basada en Nest.js que proporcion
    npm run build
    ```
 
-2. **Levantar la Aplicación en Modo de Desarrollo**
+3. **Levantar la Aplicación en Modo de Desarrollo**
 
    Utiliza el siguiente comando para iniciar la aplicación en modo de desarrollo:
 
@@ -22,7 +37,7 @@ El proyecto Secure Card Data es una aplicación basada en Nest.js que proporcion
    npm run start:dev
    ```
 
-3. **Ejecución de Pruebas en un Entorno Local**
+4. **Ejecución de Pruebas en un Entorno Local**
 
    Puedes ejecutar las pruebas de la aplicación en un entorno local con el siguiente comando:
 
@@ -30,7 +45,7 @@ El proyecto Secure Card Data es una aplicación basada en Nest.js que proporcion
    npm run test
    ```
 
-4. **Ejecución de las Azure Functions en Local**
+5. **Ejecución de las Azure Functions en Local**
 
    Para ejecutar las Azure Functions localmente, utiliza el siguiente comando:
 
@@ -38,7 +53,27 @@ El proyecto Secure Card Data es una aplicación basada en Nest.js que proporcion
    npm run start:azure
    ```
 
+6. **Creación de la Función Azure (Reemplaza con tus valores)**
+
+   Para crear una función Azure, utiliza el siguiente comando, reemplazando los valores de las variables con los adecuados:
+
+   ```bash
+   az functionapp create --resource-group <nombre-del-grupo-de-recursos> --runtime node --runtime-version 18 --functions-version 4 --name <nombre-de-la-funcion-azure> --storage-account <nombre-de-la-cuenta-de-almacenamiento> --consumption-plan-location <ubicacion-del-plan-de-consumo>
+   ```
+
+7. **Despliegue de la Función Azure (Reemplaza con tus valores)**
+
+   Para desplegar la función Azure, utiliza el siguiente comando, reemplazando los valores de las variables con los adecuados:
+
+   ```bash
+   func azure functionapp publish <nombre-de-la-funcion-azure>
+   ```
+
+Asegúrate de reemplazar `<nombre-del-grupo-de-recursos>`, `<nombre-de-la-funcion-azure>`, `<nombre-de-la-cuenta-de-almacenamiento>` y `<ubicacion-del-plan-de-consumo>` con los valores correspondientes en tu configuración de Azure.
+
 ## Solicitudes de Ejemplo
+
+Para poder realizar las pruebas de request puede usar Postman o [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) de VScode. A continuación algunos ejemplos:
 
 ### Commerce API
 
@@ -88,12 +123,10 @@ GET http://localhost:3000/token/641ce5824713b6b1
 ## Stack Utilizado 🛠️
 
 - Azure Functions
-- Redis
-- SQL Server
+- Redis (Render)
+- SQL Server (Azure)
 - Nest.js
 - Jest
-
-¡Listo! Ahora puedes ejecutar tu proyecto Secure Card Data en un entorno local y utilizar los comandos proporcionados. Siéntete libre de personalizar este README según las necesidades específicas de tu proyecto.
 
 ## Capturas de Pantalla
 
@@ -122,6 +155,46 @@ GET http://localhost:3000/token/641ce5824713b6b1
 <div align="center">
     <img src="./assets/local_azure2.png"/>
 </div>
+
+#### Ejecución en la nube - Azure Function
+
+Creación de la Azure Function
+
+<div align="center">
+    <img src="./assets/deploy1.png"/>
+</div>
+
+Deploy
+
+<div align="center">
+    <img src="./assets/deploy2.png"/>
+</div>
+
+Página de inicio
+
+<div align="center">
+    <img src="./assets/deploy3.png"/>
+</div>
+
+Creación en la página de Azure
+
+<div align="center">
+    <img src="./assets/deploy4.png"/>
+</div>
+
+Prueba de ejemplo
+
+<div align="center">
+    <img src="./assets/deploy5.png"/>
+</div>
+
+Logs en tiempo real
+
+<div align="center">
+    <img src="./assets/deploy6.png"/>
+</div>
+
+¡Listo! Ahora puedes ejecutar tu proyecto Secure Card Data en un entorno local y utilizar los comandos proporcionados. Siéntete libre de personalizar este README según las necesidades específicas de tu proyecto.
 
 ## Contribuir
 
