@@ -1,0 +1,108 @@
+@name = Commerce API
+
+# Crear un comercio
+POST http://localhost:3000/commerce
+Content-Type: application/json
+
+{
+  "name": "Mi Comercio",
+  "area": "Electrónica",
+  "n_workers": 50
+}
+
+# Obtener un comercio por ID
+GET http://localhost:3000/commerce
+X-commerce-ID: b698e944-f2e1-4b95-aed9-67faeba3ac14
+
+
+# POST Request to create a token
+POST http://localhost:3000/token
+Content-Type: application/json
+
+{
+  "card_number": 4111111111111111,
+  "cvv": 123,
+  "expiration_month": "12",
+  "expiration_year": "2025",
+  "email": "prueba@gmail.com"
+}
+
+# POST Request to create a token - FAIL card_number validateLuhnAlgorithm
+POST http://localhost:3000/token
+Content-Type: application/json
+
+{
+  "card_number": 4111111111111112,
+  "cvv": 123,
+  "expiration_month": "12",
+  "expiration_year": "2025",
+  "email": "prueba@gmail.com"
+}
+
+# POST Request to create a token - FAIL card_number len
+POST http://localhost:3000/token
+Content-Type: application/json
+
+{
+  "card_number": 4111,
+  "cvv": 123,
+  "expiration_month": "12",
+  "expiration_year": "2025",
+  "email": "prueba@gmail.com"
+}
+
+# POST Request to create a token - FAIL cvv
+POST http://localhost:3000/token
+Content-Type: application/json
+
+{
+  "card_number": 4111111111111111,
+  "cvv": 0,
+  "expiration_month": "12",
+  "expiration_year": "2025",
+  "email": "prueba@gmail.com"
+}
+
+
+# POST Request to create a token - FAIL expiration_month
+POST http://localhost:3000/token
+Content-Type: application/json
+
+{
+  "card_number": 4111111111111111,
+  "cvv": 123,
+  "expiration_month": "13",
+  "expiration_year": "2025",
+  "email": "prueba@gmail.com"
+}
+
+# POST Request to create a token - FAIL expiration_year
+POST http://localhost:3000/token
+Content-Type: application/json
+
+{
+  "card_number": 4111111111111111,
+  "cvv": 123,
+  "expiration_month": "12",
+  "expiration_year": "2005",
+  "email": "prueba@gmail.com"
+}
+
+
+# POST Request to create a token - FAIL email
+POST http://localhost:3000/token
+Content-Type: application/json
+
+{
+  "card_number": 4111111111111111,
+  "cvv": 123,
+  "expiration_month": "12",
+  "expiration_year": "2025",
+  "email": "prueba@test.com"
+}
+
+
+# GET Request to retrieve a token by its value
+GET http://localhost:3000/token/a
+
+GET http://localhost:3000/token/4b491543d483e247
